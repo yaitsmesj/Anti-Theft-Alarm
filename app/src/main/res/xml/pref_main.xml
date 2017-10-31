@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="4"
+        android:dialogTitle="Alarm Wait Time"
+        android:entries="@array/time_list_entries"
+        android:entryValues="@array/time_list_values"
+        android:key="time_list_key"
+        android:summary="Specify Time before Alarm went off"
+        android:title="Alarm Wait Time"/>
+
+    <ListPreference
+        android:defaultValue="2"
+        android:dialogTitle="Alarm Ringtone"
+        android:entries="@array/ring_list_entries"
+        android:entryValues="@array/ring_list_values"
+        android:key="ring_list_key"
+        android:summary="Specify Alarm Ringtone"
+        android:title="Alarm Ringtone"/>
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="police_light_key"
+        android:summary="To show police lights or not"
+        android:title="Show Police Lights"/>
+
+
+</PreferenceScreen>

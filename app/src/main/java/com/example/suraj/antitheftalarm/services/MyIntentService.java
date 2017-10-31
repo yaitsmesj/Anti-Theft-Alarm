@@ -17,6 +17,7 @@ public class MyIntentService extends IntentService {
     ChargingReceiver receiver;
     MotionListener motionListener;
     int serviceValue = 0;
+    boolean motionServiceStatus = true;
     public MyIntentService() {
         super("MyIntentService");
     }
@@ -34,27 +35,32 @@ public class MyIntentService extends IntentService {
 
         }else if(serviceValue==Utils.MOTION_CONSTANT) {
             motionListener = new MotionListener();
-            motionListener.startMotionSensor(this, Sensor.TYPE_ACCELEROMETER);
+            motionListener.startSensor(this, Sensor.TYPE_ACCELEROMETER);
         }else if(serviceValue==Utils.PROXIMITY_CONSTANT){
             motionListener = new MotionListener();
-            motionListener.startMotionSensor(this,Sensor.TYPE_PROXIMITY);
+            motionListener.startSensor(this,Sensor.TYPE_PROXIMITY);
         }
 
-        while (true){
+        while (motionServiceStatus){
 
         }
     }
 
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy: Destroying Intent Service");
         if(serviceValue==Utils.CHARGING_CONSTANT) {
             unregisterReceiver(receiver);
         }else if(serviceValue==Utils.MOTION_CONSTANT){
-            motionListener.stopMotionSensor(this);
+            motionListener.stopSensor(this);
         }else if(serviceValue==Utils.PROXIMITY_CONSTANT){
-
+            motionListener.stopSensor(this);
         }
-        Log.d(TAG, "onDestroy: ");
+        Utils.stopMusic();
+        Log.d(TAG, "onDestroy: Destroyed ");
         super.onDestroy();
     }
+
+
 }
+

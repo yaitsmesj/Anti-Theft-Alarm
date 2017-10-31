@@ -24,7 +24,10 @@
 
         <service
             android:name=".services.MyIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".PatternConfirmActivity"></activity>
     </application>
 
 </manifest>

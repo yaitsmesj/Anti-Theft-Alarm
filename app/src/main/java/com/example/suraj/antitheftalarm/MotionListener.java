@@ -21,10 +21,11 @@ public class MotionListener implements SensorEventListener {
     private float mAccelLast = SensorManager.GRAVITY_EARTH;
     private float mGravity[];
     private int SENSOR_SENSITIVITY = 4;
-
+    Context context;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
        // Log.d(TAG, "onSensorChanged: ");
+
 
         if(sensorEvent.sensor.getType()== Sensor.TYPE_ACCELEROMETER){
             mGravity = sensorEvent.values.clone();
@@ -40,6 +41,9 @@ public class MotionListener implements SensorEventListener {
 
             if(mAccel > 2.5){
                 Log.d(TAG, "onSensorChanged: Motion Detected");
+                stopSensor(context);
+                EventDetectcionHandler eventDetectcionHandler = new EventDetectcionHandler();
+                eventDetectcionHandler.activatingAction(context);
             }
         }else if(sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY){
             if (sensorEvent.values[0] >= -SENSOR_SENSITIVITY && sensorEvent.values[0] <= SENSOR_SENSITIVITY) {
@@ -48,6 +52,9 @@ public class MotionListener implements SensorEventListener {
                } else {
                 //far
                 Log.d(TAG, "onSensorChanged: Outside Pocket");
+                stopSensor(context);
+                EventDetectcionHandler eventDetectcionHandler = new EventDetectcionHandler();
+                eventDetectcionHandler.activatingAction(context);
                }
 
         }
@@ -58,12 +65,12 @@ public class MotionListener implements SensorEventListener {
 
     }
 
-    public void startMotionSensor(Context context, int serviceValue){
+    public void startSensor(Context context, int serviceValue){
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-
+        this.context = context;
         sensorManager.registerListener(this,sensorManager.getDefaultSensor(serviceValue),SensorManager.SENSOR_DELAY_NORMAL);
     }
-    public void stopMotionSensor(Context context){
+    public void stopSensor(Context context){
         sensorManager.unregisterListener(this);
     }
 }
