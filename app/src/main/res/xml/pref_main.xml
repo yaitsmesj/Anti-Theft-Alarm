@@ -19,11 +19,17 @@
         android:summary="Specify Alarm Ringtone"
         android:title="Alarm Ringtone"/>
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="police_light_key"
-        android:summary="To show police lights or not"
-        android:title="Show Police Lights"/>
+    <Preference
+        android:key="pattern_pref"
+        android:summary="Set the Pattern to close Alarm"
+        android:title="Pattern Lock">
+        <intent
+            android:targetPackage="com.example.suraj.antitheftalarm"
+            android:targetClass="com.example.suraj.antitheftalarm.PatternConfirmActivity">
+            <extra android:name = "set_password" android:value = "true"/>
+
+        </intent>
+    </Preference>
 
 
 </PreferenceScreen>

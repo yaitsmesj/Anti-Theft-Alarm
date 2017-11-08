@@ -27,7 +27,8 @@
             android:exported="false" />
 
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".PatternConfirmActivity"></activity>
+        <activity android:name=".PatternConfirmActivity" />
+        <activity android:name=".SetPatternActivity"></activity>
     </application>
 
 </manifest>

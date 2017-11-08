@@ -17,12 +17,16 @@ import com.example.suraj.antitheftalarm.services.MyIntentService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    // TAG variable for Testing
     public static final String TAG = "MainActivity";
+
+    // Buttons
     ImageButton btnCharge;
     ImageButton btnMotion;
     ImageButton btnProximity;
     ImageButton btnSettings;
 
+    // Status Variables
     boolean chargeStatus = false;
     boolean motionStatus = false;
     boolean proxStatus = false;
@@ -34,42 +38,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-            
+
+    //    Log.d(TAG, "onCreate: Oncreate method starting");
+        //Getting Reference of Views
         btnCharge = (ImageButton) findViewById(R.id.btnCharge);
         btnMotion = (ImageButton) findViewById(R.id.btnMotion);
         btnProximity = (ImageButton) findViewById(R.id.btnProximity);
         btnSettings = (ImageButton) findViewById(R.id.btnSettings);
 
+        //Setting Listener on Buttons
         btnCharge.setOnClickListener(this);
         btnMotion.setOnClickListener(this);
         btnProximity.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
+      //  Log.d(TAG, "onCreate: Oncreate method ending");
+
     }
 
+
+    //Method for creating Options Menu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflating Pop-up Menu
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
+
     }
+
+    //Method for Menu Item Selection
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
+        // Settings Button clicked Condition
         if(itemId == R.id.settings){
+            Log.d(TAG, "onOptionsItemSelected: Settings Clicked");
             startActivity(new Intent(MainActivity.this,SettingsActivity.class));
             return true;
         }
+        if(itemId == R.id.share){
+            Log.d(TAG, "onOptionsItemSelected: Share Clicked");
+            
+        }
+        if (itemId==R.id.about){
+            Log.d(TAG, "onOptionsItemSelected: About Clicked");
+            
+        }
+        if(itemId==R.id.rate){
+            Log.d(TAG, "onOptionsItemSelected: Rate us Clicked");
+        }   
 
         return super.onOptionsItemSelected(item);
     }
 
+
+    // OnClick method for Button Click Action
+
     @Override
     public void onClick(View view) {
+
+     //   Log.d(TAG, "onClick: Button Clicked");
         switch (view.getId()){
+
             case R.id.btnCharge:
 
+     //           Log.d(TAG, "onClick: Charge Button Clicked");
                 if(chargeStatus == false){
 
                     if(status==true){
@@ -79,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Boolean plugged = Utils.isConnected(this);
                     if(plugged){
 
-                        Log.d(TAG, "onClick: ");
                         intent = new Intent(this, MyIntentService.class);
                         intent.putExtra("SERVICE_VALUE",Utils.CHARGING_CONSTANT);
                         startService(intent);
@@ -89,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         status = true;
 
                     }else{
+
                         Toast.makeText(this, "Connect the Charger first", Toast.LENGTH_SHORT).show();
+
                     }
                 }else if(chargeStatus == true){
                     sensorClose();
@@ -99,13 +136,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.btnMotion:
+       //         Log.d(TAG, "onClick: Motion Button clicked");
 
                 if(motionStatus == false){
                     if(status == true){
                         sensorClose();
                     }
 
-                    Log.d(TAG, "onClick: Motion Button");
                     intent = new Intent(this, MyIntentService.class);
                     intent.putExtra("SERVICE_VALUE",Utils.MOTION_CONSTANT);
                     startService(intent);
@@ -114,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     motionStatus =true;
                     status = true;
                 }else{
+
                     sensorClose();
                     btnMotion.setBackgroundColor(Color.parseColor("#d6d7d7"));
 
@@ -121,12 +159,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnProximity:
+         //       Log.d(TAG, "onClick: Proximity Button clicked");
 
                 if(proxStatus == false){
                     if(status==true){
                         sensorClose();
                     }
-                    Log.d(TAG, "onClick: Proximity Button");
+
                     intent = new Intent(this, MyIntentService.class);
                     intent.putExtra("SERVICE_VALUE",Utils.PROXIMITY_CONSTANT);
                     startService(intent);
@@ -135,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     proxStatus = true;
                     status = true;
                 }else{
+
                     sensorClose();
                     btnProximity.setBackgroundColor(Color.parseColor("#d6d7d7"));
 
@@ -148,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // Method for Closing Sensors
+
     public void sensorClose(){
 
         stopService(intent);
@@ -157,6 +199,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         status = false;
     }
-
 
 }

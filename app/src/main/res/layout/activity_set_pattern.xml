@@ -11,16 +11,17 @@
     <com.andrognito.patternlockview.PatternLockView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pattern_lock_view"
-        android:layout_margin="40dp"/>
+        android:id="@+id/set_pattern_lock_view"
+        android:layout_margin="60dp"/>
 
-    <TextView
+    <Button
+        android:layout_margin="4dp"
+        android:text="Set Pattern"
+        android:padding="4dp"
+        android:background="@color/white"
         android:layout_gravity="bottom|center"
-        android:textColor="@color/white"
-        android:id="@+id/forget_Password"
-        android:text="Forget Password?"
+        android:id="@+id/set_pattern_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"/>
+        android:layout_height="wrap_content" />
 
 </FrameLayout>
